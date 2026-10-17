@@ -15,6 +15,16 @@ planner, same semantics at every tier.
 > kernel-first. Every performance number in this repo comes from an open
 > benchmark harness in-tree that you can re-run. No harness output, no claim.
 
+## Try it
+
+```sh
+git clone https://github.com/sshbrian/kestrel
+cd kestrel
+cargo run --release -p kestrel-core --example demo   # exact search, timed, recall-checked
+cargo bench -p kestrel-kernels                        # the kernel numbers below, on your CPU
+cargo test --workspace --release                      # differential tests: SIMD vs scalar
+```
+
 ## Why
 
 AI apps today stitch together a vector store, a keyword index, a metadata
