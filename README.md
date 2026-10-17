@@ -2,6 +2,7 @@
 
 **Vector search at SIMD speed. One Rust engine, phone to cloud.**
 
+[![CI](https://github.com/sshbrian/kestrel/actions/workflows/ci.yml/badge.svg)](https://github.com/sshbrian/kestrel/actions/workflows/ci.yml)
 [![License: Apache-2.0](https://img.shields.io/badge/license-Apache--2.0-blue.svg)](LICENSE)
 
 Kestrel is an AI-native, vector-first, multimodal database that runs on any
@@ -50,8 +51,11 @@ Speed is the brand; benchmarks are the proof. Methodology:
 - Each SIMD kernel must beat its scalar reference in the harness or it is
   deleted.
 
-Results: [docs/kernels.md](docs/kernels.md) and [benchmarks/](benchmarks/)
-(landing with the first crates — see roadmap).
+First measured slice (Ryzen 7 9800X3D, AVX2+FMA vs scalar reference):
+distance kernels run **6.2x–14.2x faster** than plain Rust across
+128–1536 dimensions. Full table, hardware profile, and how to re-run:
+[benchmarks/README.md](benchmarks/README.md). Kernel design notes:
+[docs/kernels.md](docs/kernels.md).
 
 ## Roadmap
 

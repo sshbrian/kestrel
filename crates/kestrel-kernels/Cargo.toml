@@ -1,0 +1,14 @@
+[package]
+name = "kestrel-kernels"
+version = "0.1.0"
+description = "SIMD distance kernels for Kestrel, differential-tested against scalar Rust references"
+edition.workspace = true
+license.workspace = true
+repository.workspace = true
+
+[dev-dependencies]
+criterion = "0.5"
+
+[[bench]]
+name = "kernels"
+harness = false
