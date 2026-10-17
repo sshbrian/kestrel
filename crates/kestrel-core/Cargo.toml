@@ -1,0 +1,10 @@
+[package]
+name = "kestrel-core"
+version = "0.1.0"
+description = "Kestrel core engine: exact vector search over SIMD kernels (pre-alpha slice)"
+edition.workspace = true
+license.workspace = true
+repository.workspace = true
+
+[dependencies]
+kestrel-kernels = { path = "../kestrel-kernels", version = "0.1.0" }
