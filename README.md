@@ -25,6 +25,76 @@ cargo bench -p kestrel-kernels                        # the kernel numbers below
 cargo test --workspace --release                      # differential tests: SIMD vs scalar
 ```
 
+### Library example
+
+Ten lines, copy-pasteable — save as `crates/kestrel-core/examples/quick.rs`,
+then `cargo run --release -p kestrel-core --example quick`:
+
+```rust
+use kestrel_core::{FlatIndex, Metric};
+fn main() {
+    let mut idx = FlatIndex::new(4, Metric::Cosine); // vocab: fast, exact, search, vector
+    idx.insert(&[0.0, 1.0, 1.0, 1.0]); // "Exact search scores every vector against the query."
+    idx.insert(&[0.0, 0.0, 1.0, 1.0]); // "Graph search walks a neighbor instead of scanning every vector."
+    let hits = idx.search(&[1.0, 1.0, 1.0, 1.0], 2); // "Fast exact search over a vector index."
+    for (id, score) in hits {
+        println!("{id}: {score:.3}");
+    }
+}
+```
+
+The vectors are bag-of-words counts over the vocabulary `fast, exact,
+search, vector`: entry `i` counts how often word `i` occurs in the sentence.
+Expected output:
+
+```
+0: 0.866
+1: 0.707
+```
+
+Full version with a 12-sentence dataset:
+`cargo run --release -p kestrel-core --example sentences`
+(dataset: `crates/kestrel-core/examples/data/sentences.txt`).
+Expected output:
+
+```
+Query: Fast exact search over a vector index.
+Top 3 (Cosine similarity, bag-of-words counts):
+  0.800  A vector database stores an index for fast similarity search.
+  0.671  Exact search scores every vector against the query.
+  0.548  Exact search is the ground truth for approximate graph search.
+```
+
+The encoding is a toy: raw word counts, not neural embeddings. Kestrel ships
+no embedding model; you supply `f32` vectors.
+
+## What this is NOT yet
+
+Pre-alpha scope, stated plainly. None of the following ships today; the
+roadmap tracks what is planned as issues.
+
+- **No approximate index.** Search is exact brute-force (`FlatIndex` over the
+  SIMD kernels). HNSW is roadmap issue #1, not shipped.
+- **No quantization or compression.** No product quantization (PQ, #2);
+  every vector is a full `f32` array in memory.
+- **No persistence.** No on-disk segment format (#3); the index is
+  in-memory only. Nothing is saved or loaded.
+- **No server, no distributed tiers, no object-store backend.** No
+  single-node server, no lakehouse service, no Iceberg interop.
+- **No hybrid search.** No BM25, sparse, metadata-filtered, or graph-hop
+  query planning — dense exact search only.
+- **No embeddings.** No embedding model, no tokenizer, no embed-on-ingest.
+  You supply `f32` vectors.
+- **No governance or agent surface.** No lineage, no row/ABAC policy inside
+  retrieval, no MCP interface, no contradiction detection.
+- **No WASM build.** The browser target is vision, not a shipped artifact.
+- **No crates.io release.** `kestrel-core` and `kestrel-kernels` have no
+  published versions on crates.io. The bare `kestrel` name on crates.io is
+  an unrelated 2020 actuarial crate (v0.0.1), not this project. Publishing
+  is a `needs-human` decision (charter §9), not decided by this checklist.
+  The `v0.1.0` git tag marks the first engine slice in this repo, not a
+  published package.
+
 ## Why
 
 AI apps today stitch together a vector store, a keyword index, a metadata
