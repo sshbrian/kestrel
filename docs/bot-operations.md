@@ -181,3 +181,4 @@ Risk check: <could this read as spam, hype, or a dig at a competitor? y/n + why>
 
 *Changes to this charter are normal commits. Relaxing §4 or §8 requires the
 owner to make that commit personally — bots may propose, never self-grant.*
+
