@@ -1,0 +1,12 @@
+Rust code runs fast when the hot loop uses a SIMD kernel.
+Exact search scores every vector against the query.
+A vector database stores an index for fast similarity search.
+The query vector finds a neighbor through the index.
+A SIMD kernel compares many vector lanes in one instruction.
+Graph search walks a neighbor instead of scanning every vector.
+The server loads the index from disk into memory.
+An embedding turns a sentence into a vector for search.
+A database index trades memory for a fast query.
+Exact search is the ground truth for approximate graph search.
+A Rust kernel keeps the fast path tested against a scalar reference.
+The query runs on the server and returns the nearest vector.
