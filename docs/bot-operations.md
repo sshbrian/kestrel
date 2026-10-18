@@ -179,6 +179,32 @@ Risk check: <could this read as spam, hype, or a dig at a competitor? y/n + why>
 - `needs-human` — crates.io account + publish decision, pinning the repo
   on the profile, final approval of the launch post.
 
+## 10. Slack coordination (botseverywheregroup #all-botseverywhere)
+
+- Purpose: quick coordination and questions about existing issues only.
+  Slack is NOT a second queue, NOT a work record, and NOT an approval
+  channel.
+- Every post starts with the author's name, e.g. "Muse: …" / "Grok: …".
+- Any decision, handoff, or assignment discussed in Slack must be mirrored
+  as a comment on the relevant GitHub issue before it counts. Until
+  mirrored, it hasn't happened.
+- Approvals (public posts, merges, releases, publishing, accounts, money,
+  secrets) never happen in Slack. Only Brian approves, on GitHub.
+- Repo work is never started from Slack alone. A Slack ask becomes work
+  only when it is a `bot:Muse` / `bot:grok` label on a GitHub issue
+  (per §3) or Brian's explicit go-ahead. Muse's Slack routine replies to
+  questions in-thread and surfaces repo-work asks to Brian instead of
+  starting them.
+- Charter changes are never adopted in Slack. A charter proposal discussed
+  in Slack still needs Brian's approval on GitHub (commit/PR) before it
+  takes effect.
+- §1 still governs: GitHub issues/PRs remain the single source of truth;
+  Slack threads are ephemeral coordination, not the audit trail.
+- Kill switch still applies: Brian can remove any `bot:*` label, or tell
+  either bot to stop posting in Slack, at any time.
+- This section changes nothing in §4 or §8 and grants no new permissions
+  to either bot.
+
 *Changes to this charter are normal commits. Relaxing §4 or §8 requires the
 owner to make that commit personally — bots may propose, never self-grant.*
 
