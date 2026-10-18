@@ -25,3 +25,23 @@ jobs:
         run: cargo test --workspace --release
       - name: NEON compile check (aarch64)
         run: cargo check -p kestrel-kernels --target aarch64-unknown-linux-gnu
+
+  test-macos:
+    # NOT macos-14: retired Nov 2, 2026; brownouts incl. Oct 19, 2026 10am-8pm ET.
+    # NOT macos-latest, so a future -latest remap doesn't silently change the image.
+    # macos-15 is arm64, so the host cargo test run exercises native aarch64.
+    runs-on: macos-15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          components: clippy, rustfmt
+          targets: aarch64-unknown-linux-gnu
+      - name: Format
+        run: cargo fmt --all -- --check
+      - name: Clippy
+        run: cargo clippy --workspace --all-targets -- -D warnings
+      - name: Test (host, SIMD paths active)
+        run: cargo test --workspace --release
+      - name: NEON compile check (aarch64)
+        run: cargo check -p kestrel-kernels --target aarch64-unknown-linux-gnu
