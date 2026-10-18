@@ -30,7 +30,7 @@ benchmarks do not back.
 
 | Area | Human | Muse | Grok bot |
 |---|---|---|---|
-| Priorities / roadmap order | Decides | Proposes with evidence | Proposes from community signal |
+| Priorities / roadmap order | Decides | Proposes with evidence | Assigns work within the roadmap; proposes from community signal |
 | Code, tests, benchmarks | Reviews | Writes and runs | Never |
 | Docs (README, design docs) | Approves | Writes | Suggests edits via issue |
 | Git commits / merges / releases | Owns (or explicitly instructs Muse per session) | Executes only when instructed | Never |
@@ -44,8 +44,16 @@ benchmarks do not back.
 
 1. **Intake.** Human (or a bot, as a *proposal*) opens an issue using the
    template in §6. Bot-proposed issues start labeled `needs-human`.
-2. **Assignment.** Human swaps `needs-human` for `bot:Muse` or `bot:grok`.
-   That label is the work order. No label, no work.
+2. **Assignment.** The Grok bot assigns work by labeling issues `bot:Muse` or
+   `bot:grok`, and posts a one-line reason in the issue thread. That label is
+   the work order. The human can reassign or remove any label at any time
+   (the kill switch in §8 still applies). Limits on Grok's assignments:
+   - Only issues that already exist and are on the roadmap, or Grok's own
+     proposals that the human has approved, may be assigned.
+   - Muse picks up at most 3 `bot:Muse` issues per session, in label order.
+   - Anything touching releases, publishing, accounts, money, secrets,
+     or public posts stays `needs-human`. Grok never assigns those to a bot.
+   - Grok may not change §4, §8, or its own permissions.
 3. **Execution.**
    - Muse: branch or direct commit **only when the human instructed it in
      that session**; otherwise it leaves changes uncommitted or as a draft
@@ -173,4 +181,3 @@ Risk check: <could this read as spam, hype, or a dig at a competitor? y/n + why>
 
 *Changes to this charter are normal commits. Relaxing §4 or §8 requires the
 owner to make that commit personally — bots may propose, never self-grant.*
-
